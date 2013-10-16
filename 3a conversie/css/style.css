@@ -1,0 +1,59 @@
+@font-face{
+	font-family: bebasneue;
+	scr: url(../font/BebasNeue.otf);
+}
+
+body{
+	background-color: #e7e7e7;
+	font-family: bebasneue;
+	color: #4d4d4d;
+}
+
+#titel{
+	margin-left:auto;
+	margin-right:auto;
+	width: 900px;
+	font-size: 55px;
+	text-align: center;
+}
+
+#content{
+	background-color: rgba(255,255,255,0.5);
+	margin-left:auto;
+	margin-right:auto;
+	width: 900px;
+	text-align: center;
+	border: 1px solid #4d4d4d;
+}
+
+#copyright{
+	text-align: center;
+	margin: 30px;
+	float: bottom;
+	font-size: 16;
+}
+
+svg.chart rect:hover{
+	opacity: 0.5;
+}
+
+svg.pie .arc:hover{
+	opacity: 0.5;
+}
+
+svg.chart{
+	font-size: 12;
+}
+
+#donut{
+	margin-top: 50;
+}
+
+svg.pie{
+	font-size: 18;
+}
+
+.legenda{
+	font-size:20;
+	margin-top:10;
+}

@@ -1,0 +1,359 @@
+<html>
+
+<head>
+<title>Doodsoorzaken niet-natuurlijk dood</title>
+<link rel="stylesheet" title="stylesheet" type="text/css" href="css/style.css" media="all" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="data/doodsoorzaken.json"></script>
+</head>
+
+<body>
+<div id="titel">Doodsoorzaken niet-natuurlijk dood<br>2007-2011</div>
+ <div id="content">
+	<div id="boven" class="charts">
+		<div id="donut1" class="donut"></div>
+		<div id="donut2" class="donut"></div>
+		<div id="donut3" class="donut"></div>
+		<div class="donut label">Mannen vs Vrouwen</div>
+		<div class="donut label">Leeftijden mannen</div>
+		<div class="donut label">Leeftijden vrouwen</div>
+		<div class="donut legenda">
+			<p><img src="img/kleur1.png"> Mannen</p>
+			<p><img src="img/kleur2.png"> Vrouwen</p>
+		</div>
+		<div class="donut legenda">
+			<p><img src="img/kleur1.png"> 50-60 jaar</p>
+			<p><img src="img/kleur2.png"> 60-70 jaar</p>
+			<p><img src="img/kleur3.png"> 70-80 jaar</p>
+			<p><img src="img/kleur4.png"> 80+ jaar</p>
+		</div>
+		<div class="donut legenda">
+			<p><img src="img/kleur1.png"> 50-60 jaar</p>
+			<p><img src="img/kleur2.png"> 60-70 jaar</p>
+			<p><img src="img/kleur3.png"> 70-80 jaar</p>
+			<p><img src="img/kleur4.png"> 80+ jaar</p>
+		</div>
+	</div>
+	<div id="onder" class="charts">
+		<div id="line"></div>
+		<div class="linechart">
+			<p><img src="img/kleur1.png"> Mannen
+			<img src="img/kleur2.png"> Vrouwen
+			<img src="img/kleur3.png"> Totaal </p>
+		</div>
+	</div>
+ </div>
+ 
+ 
+ 
+<script type="text/javascript">
+
+var jaar = 0;
+var jaarObject = [];
+var jaarData = [];
+var jaarObject = doodsoorzakenData[jaar];
+
+for(i=0; i<5; i++){
+	jaarObject = doodsoorzakenData[jaar];
+	$.each(jaarObject, function(categorie, waarde){
+		jaarData.push([categorie, waarde]);
+	});
+	jaar++;
+}
+
+// Stopt naamgeving attributen in een variabele
+var totVijftig = jaarData[1][0];
+var totZestig = jaarData[2][0];
+var totZeventig = jaarData[3][0];
+var totTachtig = jaarData[4][0];
+var manVijftig = jaarData[5][0];
+var manZestig = jaarData[6][0];
+var manZeventig = jaarData[7][0];
+var manTachtig = jaarData[8][0];
+var vrouwVijftig = jaarData[9][0];
+var vrouwZestig = jaarData[10][0];
+var vrouwZeventig = jaarData[11][0];
+var vrouwTachtig = jaarData[12][0];
+
+// Array voor totaal man en vrouw
+var totaalManVrouw = [];
+var totaalMannen = 0;
+var totaalVrouwen = 0;
+
+// Array voor totaal man per leeftijdscategorie
+var leeftijdMannen = [];
+var leeftijdManVijftig = 0;
+var leeftijdManZestig = 0;
+var leeftijdManZeventig = 0;
+var leeftijdManTachtig = 0;
+
+// Array voor totaal vrouw per leeftijdscategorie
+var leeftijdVrouwen = [];
+var leeftijdVrouwVijftig = 0;
+var leeftijdVrouwZestig = 0;
+var leeftijdVrouwZeventig = 0;
+var leeftijdVrouwTachtig = 0;
+
+// Per man/vrouw/totaal per jaartal in variabele
+var dataManZeven = 0;
+var dataVrouwZeven = 0;
+var dataTotaalZeven = 0;
+var dataManAcht = 0;
+var dataVrouwAcht = 0;
+var dataTotaalAcht = 0;
+var dataManNegen = 0;
+var dataVrouwNegen = 0;
+var dataTotaalNegen = 0;
+var dataManTien = 0;
+var dataVrouwTien = 0;
+var dataTotaalTien = 0;
+var dataManElf = 0;
+var dataVrouwElf = 0;
+var dataTotaalElf = 0;
+
+// Array's totaal aantal per jaartal
+var dataMannen = [];
+var dataVrouwen = [];
+var dataTotaal = []; 
+
+vulDataSets();
+
+// Deze functie vult alle datasets die later gebruikt worden voor het tekenen van grafieken
+function vulDataSets(){
+
+	// Pie charts
+	for(i=0; i<jaarData.length; i++){
+		
+		// Mannen vs Vrouwen
+		if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+			totaalMannen += jaarData[i][1];
+		}
+		if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+			totaalVrouwen += jaarData[i][1];
+		}
+		
+		// Leeftijden mannen
+		if(jaarData[i][0] == manVijftig){
+			leeftijdManVijftig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == manZestig){
+			leeftijdManZestig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == manZeventig){
+			leeftijdManZeventig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == manTachtig){
+			leeftijdManTachtig += jaarData[i][1];
+		}
+		
+		// Leeftijden vrouwen
+		if(jaarData[i][0] == vrouwVijftig){
+			leeftijdVrouwVijftig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == vrouwZestig){
+			leeftijdVrouwZestig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == vrouwZeventig){
+			leeftijdVrouwZeventig += jaarData[i][1];
+		}
+		if(jaarData[i][0] == vrouwTachtig){
+			leeftijdVrouwTachtig += jaarData[i][1];
+		}
+	}
+	
+	// Push in Array's
+	totaalManVrouw.push(totaalMannen, totaalVrouwen);
+	leeftijdMannen.push(leeftijdManVijftig, leeftijdManZestig, leeftijdManZeventig, leeftijdManTachtig);
+	leeftijdVrouwen.push(leeftijdVrouwVijftig, leeftijdVrouwZestig, leeftijdVrouwZeventig, leeftijdVrouwTachtig);
+	
+	// Line chart
+	for(i=0; i<jaarData.length; i++){
+		if(i < 13){
+			if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+				dataManZeven += jaarData[i][1];
+			}
+			if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+				dataVrouwZeven += jaarData[i][1];
+			}
+		}
+		if(i > 13 && i < 26){
+			if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+				dataManAcht += jaarData[i][1];
+			}
+			if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+				dataVrouwAcht += jaarData[i][1];
+			}
+		}
+		if(i > 26 && i < 39){
+			if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+				dataManNegen += jaarData[i][1];
+			}
+			if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+				dataVrouwNegen += jaarData[i][1];
+			}
+		}
+		if(i > 39 && i < 52){
+			if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+				dataManTien += jaarData[i][1];
+			}
+			if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+				dataVrouwTien += jaarData[i][1];
+			}
+		}
+		if(i > 52 && i < 65){
+			if(jaarData[i][0] == manVijftig || jaarData[i][0] == manZestig || jaarData[i][0] == manZeventig || jaarData[i][0] == manTachtig){
+				dataManElf += jaarData[i][1];
+			}
+			if(jaarData[i][0] == vrouwVijftig || jaarData[i][0] == vrouwZestig || jaarData[i][0] == vrouwZeventig || jaarData[i][0] == vrouwTachtig){
+				dataVrouwElf += jaarData[i][1];
+			}
+		}
+	}
+	
+	// Totale data per jaar
+	dataTotaalZeven = dataManZeven + dataVrouwZeven;
+	dataTotaalAcht = dataManAcht + dataVrouwAcht;
+	dataTotaalNegen = dataManNegen + dataVrouwNegen;
+	dataTotaalTien = dataManTien + dataVrouwTien;
+	dataTotaalElf = dataManElf + dataVrouwElf;
+	
+	// Push in Array's
+	dataMannen.push(dataManZeven, dataManAcht, dataManNegen, dataManTien, dataManElf);
+	dataVrouwen.push(dataVrouwZeven, dataVrouwAcht, dataVrouwNegen, dataVrouwTien, dataVrouwElf);
+	dataTotaal.push(dataTotaalZeven, dataTotaalAcht, dataTotaalNegen, dataTotaalTien, dataTotaalElf);	
+}
+
+// Functie voor het maken van de pie chart
+function maakDonut(donutData, container){
+	var data = donutData;
+	
+	var w = 184,
+		h = 184,
+		r = 91,
+		ir = 0,
+		pie = d3.layout.pie().sort(null),
+		arc = d3.svg.arc().innerRadius(ir).outerRadius(r);
+		
+	var svg = d3.select(container).append("svg:svg")
+		.attr("width", w)
+		.attr("height", h)
+		.attr("class", "donutChart")
+		.append("svg:g")
+		.attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+		
+	var arcs = svg.selectAll("path")
+		.data(pie(data))
+			.enter().append("svg:path")
+				.attr("d", arc)
+				.each(function(d) { this._current = d; })
+				.attr("class", function(d,i){
+					if (i == 0) return 'kleurEen';
+					if (i == 1) return 'kleurTwee';
+					if (i == 2) return 'kleurDrie';
+					if (i == 3) return 'kleurVier';
+					});				
+}
+
+// Hij maakt drie charts
+maakDonut(totaalManVrouw, '#donut1');
+maakDonut(leeftijdMannen, '#donut2');
+maakDonut(leeftijdVrouwen, '#donut3');
+
+// Functie voor het maken van de line chart
+function maakLijn(){
+	var data1 = dataMannen,
+		data2 = dataVrouwen,
+		data3 = dataTotaal,
+		dataMax = 5000;
+		w = 650,
+		h = 200,
+		margin = 20,
+		y = d3.scale.linear().domain([0, dataMax]).range([0 + margin, h - margin]),
+		x = d3.scale.linear().domain([0, data1.length-1]).range([0 + margin, w - margin]);
+		
+	var chart = d3.select("#line")
+		.append("svg:svg")
+		.attr("class", 'lijn')
+		.attr("width", w)
+		.attr("height", h);
+	
+	var g = chart.append("svg:g")
+		.attr("transform", "translate(0, 200)");
+		
+	var line = d3.svg.line()
+		.x(function(d,i){ return x(i); })
+		.y(function(d){ return -1 * y(d); });
+		
+	g.append("svg:path")
+		.attr("d", line(data1))
+		.attr("class", 'kleurEen');
+	
+	g.append("svg:path")
+		.attr("d", line(data2))
+		.attr("class", 'kleurTwee');
+	
+	g.append("svg:path")
+		.attr("d", line(data3))
+		.attr("class", 'kleurDrie');
+		
+	g.append("svg:line")
+		.attr("x1", x(0))
+		.attr("y1", -1 * y(0))
+		.attr("x2", x(w))
+		.attr("y2", -1 * y(0));
+		
+	g.append("svg:line")
+		.attr("x1", x(0))
+		.attr("y1", -1 * y(0))
+		.attr("x2", x(0))
+		.attr("y2", -1 * y(dataMax));
+	
+	g.selectAll(".xLabel")
+		.data(x.ticks(5))
+		.enter().append("svg:text")
+		.attr("class", "xLabel")
+		.text(function(d,i){ return 2007 + i; })
+		.attr("x", function(d){ return x(d) })
+		.attr("y", 0)
+		.attr("text-anchor", "middle");
+		
+	g.selectAll(".yLabel")
+		.data(y.ticks(5))
+		.enter().append("svg:text")
+		.attr("class", "yLabel")
+		.text(String)
+		.attr("x", 0)
+		.attr("y", function(d){ return (-1 * y(d))-8 })
+		.attr("text-anchor", "right")
+		.attr("dy", 4);
+		
+	g.selectAll(".xTicks")
+		.data(x.ticks(5))
+		.enter().append("svg:line")
+		.attr("class", "xTicks")
+		.attr("x1", function(d){ return x(d); })
+		.attr("y1", -1 * y(0))
+		.attr("x2", function(d){ return x(d); })
+		.attr("y2", -1 * y(-0.3));
+		
+	g.selectAll(".yTicks")
+		.data(y.ticks(5))
+		.enter().append("svg:line")
+		.attr("class", "yTicks")
+		.attr("y1", function(d){ return -1 * y(d); })
+		.attr("x1", x(-0.3))
+		.attr("y2", function(d){ return -1 * y(d); })
+		.attr("x2", x(0));
+
+}
+
+// Hij voert de lijnfunctie 1x uit
+maakLijn();
+
+</script>
+<div id="copyright">© Arjan Marisaël - D3 - Minor Databeleving - 2013</div>
+
+</body>
+
+</html>

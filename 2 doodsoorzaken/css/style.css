@@ -1,0 +1,95 @@
+@font-face{
+	font-family: bebasneue;
+	scr: url(../font/BebasNeue.otf);
+}
+
+body{
+	background-color: #e7e7e7;
+	font-family: bebasneue;
+	color: #4d4d4d;
+}
+
+#titel{
+	margin-left:auto;
+	margin-right:auto;
+	width: 900px;
+	font-size: 40px;
+	text-align: center;
+}
+
+#content{
+	width: 700px;
+	background-color: rgba(255,255,255,0.5);
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+	border: 1px solid #4d4d4d;
+}
+
+.donut{
+	width: 184px;
+	margin-right: 38px;
+	margin-top: 20px;
+	float: right;
+}
+
+.linechart{
+	text-align: center;
+	width: 650px;
+}
+
+.xLabel, .yLabel{
+	font-size: 12;
+}
+
+.label{
+	margin-top: 10px;
+	text-align: center;
+}
+
+.legenda{
+	text-align: left;
+	font-size: 16;
+	margin-top: 10px;
+}
+
+line{
+	stroke: #4d4d4d;
+}
+
+svg.donutChart path:hover{
+	opacity: 0.5;
+}
+
+#onder path{
+	stroke-width: 2;
+	fill: none !important;
+}
+
+.lijn{
+	border-top: 1px solid #4d4d4d;
+}
+
+.kleurEen{
+	stroke: #ffa640;
+	fill: #ffa640;
+}
+.kleurTwee{
+	stroke: #a67701;
+	fill: #a67701;
+}
+.kleurDrie{
+	stroke: #be972e;
+	fill: #be972e;
+}
+.kleurVier{
+	stroke: #ffbd73;
+	fill: #ffbd73;
+}
+
+#copyright{
+	text-align: center;
+	margin-top: 30px;
+	float: bottom;
+	font-size: 16;
+}

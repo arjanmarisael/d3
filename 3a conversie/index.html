@@ -1,0 +1,152 @@
+<html>
+
+<head>
+<title>Conversie doelen</title>
+<link rel="stylesheet" title="stylesheet" type="text/css" href="css/style.css" media="all" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/d3.js"></script>
+</head>
+
+<body>
+<div id="titel">Conversie doelen</div>
+<div id="content">
+	<div id="barchart"></div>
+	<div class="legenda">Aantal conversies per week</div>
+	<div id="donut"></div>
+	<div class="legenda">Aantal conversieratio's onder en boven de 10</div>
+</div>
+ 
+<script type="text/javascript">
+
+var data = [],
+	data2 = [],
+	rows,
+	conversie1 = 0,
+	conversie2 = 0;
+		
+d3.csv("data/dataset_target.csv", function(loadedRows){
+	rows = loadedRows;
+	handleLoadedRows();
+});
+
+function handleLoadedRows(){
+	$.each(rows, function(i,item){
+		data.push(parseFloat(item.Conversies)/1000);
+		data2.push(parseFloat(item.ConversieRatio));
+	});
+	maakGrafiek();
+	maakDonut();
+}
+
+function maakGrafiek(){
+	
+	var w = 30,
+		h = 250;
+		
+	var chart = d3.select("#barchart")
+        .append("svg:svg")
+        .attr("width", (w+3) * data.length)
+        .attr("height", h)
+        .attr("align", "right")
+        .attr("class", "chart")
+		.append("svg:g");
+            
+    var x = d3.scale.linear()
+        .domain([0, h])
+        .range([0, w]);
+            
+    var y = d3.scale.linear()
+        .domain([0, w])
+        .rangeRound([0, h]);
+        
+    chart.selectAll("rect")
+        .data(data)
+        .enter().append("rect")
+        .attr("x", function(d, i) { return i * (w+3); })
+		.attr("y", function(d) { return h })
+        .attr("width", w)
+		.attr("height", 0)
+		.style("fill", function(d) { 
+			var returnColor;
+			if(d < 11){
+				returnColor = "red";
+			}
+			else if(d >= 11){
+				returnColor = "green";
+			}
+			return returnColor;})
+		.transition()
+			.duration(1500)
+			.attr("y", function(d) { return h - y(d); })
+			.attr("height", function(d) { return y(d); });
+			
+	chart.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .text(function(d){ return d; })
+            .attr("x", function(d, i) { return i * (w+3)+1; })
+			.attr("fill", "#ffffff")
+			.attr("y", function(d) { return h+10 })
+			.transition()
+			.duration(1500)
+            .attr("y", function(d) { return h - y(d) + 10; });
+}
+
+function maakDonut(){
+	//console.log(data2);
+	
+	for(i=0; i<data2.length; i++){
+		
+		if(data2[i] < 10){
+			conversie1++;
+		}
+		else if(data2[i] >= 10){
+			conversie2++;
+		}
+	}
+	
+	var data = [conversie1, conversie2];
+        
+        var w = 200,
+            h = 200,
+            r = 100,
+            ir = 0,
+            labelr = r + 30, // radius for label anchor
+            color = d3.scale.category20c().domain([conversie1, conversie2]).range(["red", "green"]),
+            donut = d3.layout.pie().sort(null),
+            arc = d3.svg.arc().innerRadius(ir).outerRadius(r);
+        
+     var svg = d3.select("#donut").append("svg:svg")
+        .data(donut(data))
+            .attr("width", w)
+            .attr("height", h)
+			.attr("class", "pie")
+          .append("svg:g")
+            .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
+
+
+        var arcs = svg.selectAll(".arc")
+                .data(donut(data))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+        arcs.append("path")
+                .attr("d", arc)
+                .attr("fill", function(d, i) { return color(i); })
+
+      arcs.append("text")
+                .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+                .attr("dy", ".15em")
+                .style("text-anchor", "middle")
+				.attr("fill", "#ffffff")
+                .text(function(d) { return d.value; });
+}
+
+
+</script>
+<div id="copyright">© Arjan Marisaël - D3 - Minor Databeleving - 2013</div>
+
+</body>
+
+</html>

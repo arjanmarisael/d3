@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<LINK HREF="css/style.css" REL="stylesheet" TYPE="text/css">
+	<script type="text/javascript" src="js/d3.v3.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/pie.js"></script>
+	<script type="text/javascript" src="js/line.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+	<h1>Dashboard</h1>
+	<form>
+       <fieldset>
+          <legend id="huidigeDatum">Datum:</legend>
+          <p>
+             <label>Selecteer datum</label>
+             <select id = "datumLijst">
+               <option value = "1-9-2013" selected>1-9-2013</option>
+               <option value = "2-9-2013">2-9-2013</option>
+               <option value = "3-9-2013">3-9-2013</option>
+               <option value = "4-9-2013">4-9-2013</option>
+			   <option value = "5-9-2013">5-9-2013</option>
+			   <option value = "6-9-2013">6-9-2013</option>
+			   <option value = "7-9-2013">7-9-2013</option>
+			   <option value = "8-9-2013">8-9-2013</option>
+			   <option value = "9-9-2013">9-9-2013</option>
+			   <option value = "10-9-2013">10-9-2013</option>
+			   <option value = "11-9-2013">11-9-2013</option>
+			   <option value = "12-9-2013">12-9-2013</option>
+			   <option value = "13-9-2013">13-9-2013</option>
+			   <option value = "14-9-2013">14-9-2013</option>
+			   <option value = "alles">Alles</option>
+             </select>
+          </p>
+		  <div id="kol1" class="kol"><span id="spanLight">New</span> vs <span id="spanMedium">Returning</span> - A</div>
+		  <div id="kol2" class="kol"><span id="spanLight">New</span> vs <span id="spanMedium">Returning</span> - B</div>
+		  <div id="kol3" class="kol"><span id="spanLight">Desktop</span> vs <span id="spanMedium">Tablet</span> vs <span id="spanFull">Mobile</span> - A</div>
+		  <div id="kol4" class="kol"><span id="spanLight">Desktop</span> vs <span id="spanMedium">Tablet</span> vs <span id="spanFull">Mobile</span> - B</div>
+		   <div id="row1"><span id="spanLight">A</span> vs <span id="spanFull">B</span> Conversies</div>
+       </fieldset>
+    </form>
+	</div>
+</body>
+
+<script type="text/javascript">
+	
+var dataA = [];
+var dataB = [];
+var datum = $("#datumLijst").val();
+$("#huidigeDatum").html("Datum: " + datum);
+var rows = 0;
+
+$("#datumLijst").change(function() {
+	datum = $("#datumLijst").val();
+	$("#huidigeDatum").html("Datum: " + datum);
+	console.log(datum);
+	d3.selectAll(".kol svg").remove();
+	addPieNvsr(dataA,"#kol1",datum);
+	addPieNvsr(dataA,"#kol3",datum);
+	addPieNvsr(dataB,"#kol2",datum);
+	addPieNvsr(dataB,"#kol4",datum);
+});
+
+d3.csv("dataset_abtest.csv", function(loadedRows){
+	rows = loadedRows;
+	handleLoadedRows();
+	drawLine();
+	addPieNvsr(dataA,"#kol1",datum);
+	addPieNvsr(dataA,"#kol3",datum);
+	addPieNvsr(dataB,"#kol2",datum);
+	addPieNvsr(dataB,"#kol4",datum);
+});
+
+function handleLoadedRows(){
+	
+	$.each(rows, function(i,item){
+		if(item.Version == "A"){
+			dataA.push(rows[i]);
+		}
+		if(item.Version == "B"){
+			dataB.push(rows[i]);
+		}
+	});
+}
+</script>
+
+</html>

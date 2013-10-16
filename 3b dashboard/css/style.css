@@ -1,0 +1,126 @@
+@font-face{
+	font-family: bebasneue;
+	src: url(../font/BebasNeue.otf);
+}
+body {
+	background: url(../subtle_white_feathers.png) repeat;
+	font-family: bebasneue;
+	color:#4D4D4D; 
+	fill:#4D4D4D;
+	font-size: 18px;
+	text-align:center;
+}
+svg {
+	margin: 0 auto;
+}
+span{
+	padding:0 2px;
+}
+#column {
+	margin: 0 auto;
+	border: none;
+	padding: 0;
+	width: 1400px;
+	height: 800px;
+	background-repeat: no-repeat;
+}
+#circle {
+	margin: 0 auto;
+	margin-top: -50px;
+	position:relative;
+	left: 55px;
+}
+#wrapper {
+	width: 950px;
+	margin:0 auto;
+	position: relative;
+}
+#percentage{
+	height:100px;
+	font-size: 72px;
+	position: absolute;
+	text-align: center;
+	width: 684px;
+	top: 213px;
+}
+h1{
+	font-size: 55px;
+	text-align:center;
+	margin:0;
+	padding:0;
+}
+rect:hover, path:hover{
+	opacity:0.7;
+}
+ul {
+	padding:0;
+	margin:0 auto;
+	text-align:center;
+}
+li{
+	margin:0;
+	padding:0 3em;
+	float:left; 
+	list-style:none; 
+	display:inline; 
+	cursor: pointer; 
+	font-size: 30px;
+}
+#row1{
+	height: 240px;
+	width: 100%;
+	padding: 10px;
+	float:left;
+	margin-top:10px;
+}
+
+#row1 path{
+	stroke-width: 2;
+	fill: none !important;
+}
+
+.kleurLineEen{
+	stroke: #ffd792;
+	fill: #ffd792;
+}
+.kleurLineTwee{
+	stroke: #ffa200;
+	fill: #ffa200;
+}
+
+.kol{
+	width: 22%;
+	height: 180px;
+	padding: 10px;
+	float: left;
+	border-top: 1px solid #9c9c9c;
+	border-bottom: 1px solid #9c9c9c;
+}
+
+#kol1,#kol3{
+	border-right: 1px dashed #9c9c9c;
+}
+
+#kol2{
+	border-right: 1px solid #9c9c9c;
+}
+#conversies:hover{
+	color:#bc0000;
+	-webkit-transition:color 0.8s ;
+}
+#conversieratio:hover{
+	color:#0BB5FF;
+	-webkit-transition:color 1s ease-in;  
+}
+
+#spanLight{
+	background-color: #ffd792;
+}
+
+#spanMedium{
+	background-color: #ffb05c;
+}
+
+#spanFull{
+	background-color: #ffa200;
+}
